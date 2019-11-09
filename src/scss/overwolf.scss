@@ -1,0 +1,124 @@
+// App Header
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 35px;
+    height: 35px;
+    background: $black2;
+    padding: 5px 0 5px 10px;
+    border-bottom: 1px solid $white-10;
+    cursor: move;
+
+    .header-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .brand {
+        height: 18px;
+    }
+
+    .app-status {
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
+                                      supported by Chrome and Opera */
+        display: flex;
+        align-items: center;
+
+        .status-group {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-size: 14px;
+            color: $white-60;
+
+            .status-item {
+                width: 8px;
+                height: 8px;
+                margin-left: 5px;
+                border-radius: 100px;
+                margin-top: 1px;
+
+                &.up {
+                    background: $buff;
+                    box-shadow: 0 0 10px $buff;
+                }
+
+                &.down {
+                    background: $nerf;
+                    box-shadow: 0 0 10px $nerf;
+                }
+
+                &.mid {
+                    background: $updated;
+                    box-shadow: 0 0 10px $updated;
+                }
+            }
+
+            &.first-child {
+                margin-right: 20px;
+            }
+        }
+    }
+
+    .app-instructions {
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
+                                      supported by Chrome and Opera */
+        display: flex;
+        text-align: center;
+        line-height: 1;
+
+        .instruction-group {
+            margin: 0 10px;
+            font-size: 14px;
+            color: $white-60;
+
+            b {
+                margin-left: 5px;
+                color: $primary;
+                font-weight: 600;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .window-controls-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: initial;
+
+        .window-control {
+            width: 35px;
+            height: 35px;
+        }
+
+        img.window-control {
+            width: 14px;
+            opacity: 0.54;
+        }
+    }
+}

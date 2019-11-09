@@ -1,0 +1,13 @@
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=EB+Garamond:700&display=swap');
+@import url("https://use.typekit.net/bya0rai.css");
+
+@mixin font {
+    font-family: 'sofia-pro', sans-serif;
+}
+
+@import './scss/base.scss';
+@import './scss/overwolf.scss';
+@import './scss/layout.scss';
+@import './scss/nav.scss';
+@import './scss/ads.scss';
