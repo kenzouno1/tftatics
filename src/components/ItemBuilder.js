@@ -5,9 +5,9 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 // Components
 import { SearchBar } from "../components/SearchBar";
-import { ItemPortrait } from "../components/ItemPortrait";
-
-export class ItemBuilder extends Component {
+import ItemPortrait from "../components/ItemPortrait";
+import { withTranslation } from "react-i18next";
+class ItemBuilder extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,10 +47,11 @@ export class ItemBuilder extends Component {
   }
 
   render() {
+    const { t } = this.props;
     //TFT
     const columns = [
       {
-        Header: this.props.lang === "en" ? "Recipe" : "合成方式",
+        Header: t("Recipe"),
         accessor: "name",
         minWidth: 80,
         Cell: props => (
@@ -81,7 +82,7 @@ export class ItemBuilder extends Component {
         )
       },
       {
-        Header: this.props.lang === "en" ? "Combines Into" : "合成的装备",
+        Header: t("Combines Into"),
         accessor: "bonus",
         minWidth: 300,
         style: { flexWrap: "nowrap" },
@@ -105,7 +106,7 @@ export class ItemBuilder extends Component {
                       patchJSON={this.props.patchJSON}
                       lang={this.props.lang}
                     ></ItemPortrait>
-                    {this.props.lang === "en"
+                    {this.props.lang !== "ch"
                       ? Object.keys(item.bonus).map(function(key) {
                           var bonus = item.bonus[key];
                           return (
@@ -133,7 +134,7 @@ export class ItemBuilder extends Component {
     ];
     const combineColumns = [
       {
-        Header: this.props.lang === "en" ? "Recipe" : "合成方式",
+        Header: t("Recipe"),
         accessor: "combine",
         minWidth: 80,
         Cell: ({ row }) => {
@@ -159,7 +160,7 @@ export class ItemBuilder extends Component {
         }
       },
       {
-        Header: this.props.lang === "en" ? "Combines Into" : "合成的装备",
+        Header: t("Combines Into"),
         accessor: "name",
         minWidth: 300,
         style: { flexWrap: "nowrap" },
@@ -173,7 +174,7 @@ export class ItemBuilder extends Component {
               patchJSON={this.props.patchJSON}
               lang={this.props.lang}
             ></ItemPortrait>
-            {this.props.lang === "en"
+            {this.props.lang !== "ch"
               ? Object.keys(props.original.bonus).map(function(key) {
                   var bonus = props.original.bonus[key];
                   return (
@@ -227,7 +228,7 @@ export class ItemBuilder extends Component {
               category="Base"
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "Base Items" : "基础装备"}</h3>
+              <h3>{t("Base Items")}</h3>
             </div>
             <div
               className={
@@ -237,19 +238,13 @@ export class ItemBuilder extends Component {
               category="Combined"
               onClick={this.setCategory}
             >
-              <h3>
-                {this.props.lang === "en"
-                  ? "Combined Items"
-                  : "合成的装备/进阶装备"}
-              </h3>
+              <h3>{t("Combined Items")}</h3>
             </div>
           </div>
           <div className="searchbar-wrapper">
             <SearchBar
               searchValue={this.state.searchValue}
-              placeholderValue={
-                this.props.lang === "en" ? "Search for an item..." : "搜索"
-              }
+              placeholderValue={t("Search for an item...")}
               updateSearch={this.updateSearch}
               clearSearch={this.clearSearch}
             />
@@ -325,7 +320,7 @@ export class ItemBuilder extends Component {
                         alt={item.name}
                       ></img>
                       <div className="overlay-bonus-title">
-                        {this.props.lang === "en" ? item.name : item.name_ch}
+                        {this.props.lang !== "ch" ? item.name : item.name_ch}
                         <div className="item-stats-wrapper">
                           {item.stats
                             ? Object.keys(item.stats).map(function(key) {
@@ -368,3 +363,4 @@ export class ItemBuilder extends Component {
     );
   }
 }
+export default withTranslation()(ItemBuilder);

@@ -1,9 +1,10 @@
 // Utilities
 import React, { Component } from "react";
 import Tooltip from "rc-tooltip";
-
-export class OriginPortrait extends Component {
+import { withTranslation } from "react-i18next";
+class OriginPortrait extends Component {
   render() {
+    const { t } = this.props;
     return (
       <Tooltip
         placement="top"
@@ -23,14 +24,14 @@ export class OriginPortrait extends Component {
                 }
                 alt={this.props.origin.name}
               ></img>
-              {this.props.lang === "en"
+              {this.props.lang !== "ch"
                 ? this.props.origin.name
                 : this.props.origin.name_ch}
             </div>
             <div className="overlay-bonus-list">
               {this.props.origin.effect ? (
                 <div className="overlay-bonus-heading">
-                  {this.props.lang === "en"
+                  {this.props.lang !== "ch"
                     ? this.props.origin.effect
                     : this.props.origin.effect_ch}
                 </div>
@@ -94,7 +95,7 @@ export class OriginPortrait extends Component {
                   }, this)}
             </div>
             <div className="overlay-recipe">
-              {this.props.lang === "en" ? "Champions:" : "英雄详情"}
+              {t("Champions:")}
               {Object.keys(this.props.charactersJSON).map(function(key) {
                 var character = this.props.charactersJSON[key];
                 if (character.active) {
@@ -251,7 +252,7 @@ export class OriginPortrait extends Component {
                 alt={this.props.origin.name}
               ></img>
               {this.props.tier
-                ? this.props.lang === "en"
+                ? this.props.lang !== "ch"
                   ? this.props.origin.name
                   : this.props.origin.name_ch
                 : null}
@@ -262,3 +263,4 @@ export class OriginPortrait extends Component {
     );
   }
 }
+export default withTranslation()(OriginPortrait);

@@ -1,7 +1,7 @@
 // Utilities
 import React, { Component } from "react";
 // Components
-import { ItemPortrait } from "./ItemPortrait.js";
+import ItemPortrait from "./ItemPortrait.js";
 
 export class ItemTierList extends Component {
   render() {

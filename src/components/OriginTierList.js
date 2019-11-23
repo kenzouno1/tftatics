@@ -1,7 +1,7 @@
 // Utilities
 import React, { Component } from "react";
 // Components
-import { OriginPortrait } from "./OriginPortrait.js";
+import OriginPortrait from "./OriginPortrait.js";
 
 export class OriginTierList extends Component {
   render() {

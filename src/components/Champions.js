@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
+
 // TFT
 // Components
 import { SearchBar } from "../components/SearchBar";
-import { CharacterPortrait } from "../components/CharacterPortrait";
-import { ItemPortrait } from "../components/ItemPortrait";
+import CharacterPortrait from "../components/CharacterPortrait";
+import ItemPortrait from "../components/ItemPortrait";
 import { Divider } from "../components/Divider";
 
-export class Champions extends Component {
+class Champions extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,6 +49,7 @@ export class Champions extends Component {
   }
 
   render() {
+    const { t } = this.props;
     var data = this.props.charactersJSON;
     data.sort(function(a, b) {
       if (a.name < b.name) {
@@ -69,7 +72,7 @@ export class Champions extends Component {
               category={"all"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "All" : "所有英雄"}</h3>
+              <h3>{t("All")}</h3>
             </div>
             <div
               className={
@@ -145,11 +148,7 @@ export class Champions extends Component {
           <div className="searchbar-wrapper">
             <SearchBar
               searchValue={this.state.searchValue}
-              placeholderValue={
-                this.props.lang === "en"
-                  ? "Search by name, origin, or class..."
-                  : "搜索"
-              }
+              placeholderValue={t("Search by name, origin, or class...")}
               updateSearch={this.updateSearch}
               clearSearch={this.clearSearch}
             />
@@ -191,7 +190,7 @@ export class Champions extends Component {
                           activeChampion={this.state.activeChampion}
                           sidebar={"sidebar"}
                           patchJSON={this.props.patchJSON}
-                          lang={this.props.lang}
+                          lang={this.props.i18n.language}
                           set={this.props.set}
                         ></CharacterPortrait>
                       );
@@ -233,20 +232,14 @@ export class Champions extends Component {
                           </div>
                           <div className="character-meta">
                             <h1>
-                              {this.props.lang === "en"
+                              {this.props.i18n.language === "en"
                                 ? characterData.name
                                 : characterData.name_ch}
                             </h1>
                             <div>
-                              <span className="bold">
-                                {this.props.lang === "en"
-                                  ? "Range:"
-                                  : "攻击范围"}{" "}
-                              </span>
+                              <span className="bold">{t("Range:")} </span>
                               {characterData.range_sm} •{" "}
-                              <span className="bold">
-                                {this.props.lang === "en" ? "Cost:" : "费用"}{" "}
-                              </span>
+                              <span className="bold">{t("Cost:")} </span>
                               {characterData.cost}
                             </div>
                           </div>
@@ -267,8 +260,8 @@ export class Champions extends Component {
                                       <ItemPortrait
                                         item={item}
                                         key={key}
+                                        lang={this.props.i18n.language}
                                         patchJSON={this.props.patchJSON}
-                                        lang={this.props.lang}
                                       ></ItemPortrait>
                                     ) : null;
                                   }
@@ -358,7 +351,7 @@ export class Champions extends Component {
                             <div className="ability-description-header">
                               <div className="ability-description-name">
                                 <h3>
-                                  {this.props.lang === "en"
+                                  {this.props.i18n.language === "en"
                                     ? characterData.skill[0].name
                                     : characterData.skill[0].name_ch}
                                 </h3>
@@ -383,7 +376,7 @@ export class Champions extends Component {
                             </div>
                             <div className="ability-bonus">
                               <p>
-                                {this.props.lang === "en"
+                                {this.props.i18n.language === "en"
                                   ? characterData.skill[0].description
                                   : characterData.skill[0].description_ch}
                               </p>
@@ -447,7 +440,7 @@ export class Champions extends Component {
                                                   this.selectChampion
                                                 }
                                                 patchJSON={this.props.patchJSON}
-                                                lang={this.props.lang}
+                                                lang={this.props.i18n.language}
                                                 set={this.props.set}
                                               ></CharacterPortrait>
                                             );
@@ -501,8 +494,8 @@ export class Champions extends Component {
                                                   this.selectChampion
                                                 }
                                                 patchJSON={this.props.patchJSON}
-                                                lang={this.props.lang}
                                                 set={this.props.set}
+                                                lang={this.props.i18n.language}
                                               ></CharacterPortrait>
                                             );
                                           }
@@ -530,3 +523,4 @@ export class Champions extends Component {
     );
   }
 }
+export default withTranslation()(Champions);

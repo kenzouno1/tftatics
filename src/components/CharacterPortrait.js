@@ -2,10 +2,11 @@
 import React, { Component } from "react";
 import Tooltip from "rc-tooltip";
 // Components
-import { ItemPortrait } from "./ItemPortrait.js";
-
-export class CharacterPortrait extends Component {
+import ItemPortrait from "./ItemPortrait.js";
+import { withTranslation } from "react-i18next";
+class CharacterPortrait extends Component {
   render() {
+    const { t } = this.props;
     return this.props.builder ? (
       <div
         className={"characters-item c" + this.props.character.cost}
@@ -34,7 +35,7 @@ export class CharacterPortrait extends Component {
                     }
                     alt={this.props.character.name}
                   ></img>
-                  {this.props.lang === "en"
+                  {this.props.lang !== "ch"
                     ? this.props.character.name
                     : this.props.character.name_ch}
                 </div>
@@ -84,7 +85,7 @@ export class CharacterPortrait extends Component {
                 </div>
               </div>
               <div className="overlay-recipe">
-                {this.props.lang === "en" ? "Items:" : "装备"}
+                {t("Items:")}
                 {Object.keys(this.props.character.items).map(function(key) {
                   var itemC = this.props.character.items[key];
                   return (
@@ -224,7 +225,7 @@ export class CharacterPortrait extends Component {
                     }
                     alt={this.props.character.name}
                   ></img>
-                  {this.props.lang === "en"
+                  {this.props.lang !== "ch"
                     ? this.props.character.name
                     : this.props.character.name_ch}
                 </div>
@@ -244,7 +245,7 @@ export class CharacterPortrait extends Component {
                           alt={origin}
                         ></img>
                         <div className="overlay-bonus-item-value">
-                          {this.props.lang === "en" ? origin : origin_ch}
+                          {this.props.lang !== "ch" ? origin : origin_ch}
                         </div>
                       </div>
                     );
@@ -264,7 +265,7 @@ export class CharacterPortrait extends Component {
                           alt={type}
                         ></img>
                         <div className="overlay-bonus-item-value">
-                          {this.props.lang === "en" ? type : type_ch}
+                          {this.props.lang !== "ch" ? type : type_ch}
                         </div>
                       </div>
                     );
@@ -280,7 +281,7 @@ export class CharacterPortrait extends Component {
                 </div>
               </div>
               <div className="overlay-recipe">
-                {this.props.lang === "en" ? "Items:" : "装备"}
+                {t("Items:")}
                 {Object.keys(this.props.character.items).map(function(key) {
                   var itemC = this.props.character.items[key];
                   return (
@@ -404,12 +405,12 @@ export class CharacterPortrait extends Component {
         ) : null}
         {this.props.champions ? (
           <p className="character-name">
-            {this.props.lang === "en"
+            {this.props.lang !== "ch"
               ? this.props.character.name
               : this.props.character.name_ch}
           </p>
         ) : this.props.table ? (
-          this.props.lang === "en" ? (
+          this.props.lang !== "ch" ? (
             this.props.character.name
           ) : (
             this.props.character.name_ch
@@ -419,3 +420,4 @@ export class CharacterPortrait extends Component {
     );
   }
 }
+export default withTranslation()(CharacterPortrait);

@@ -1,12 +1,12 @@
 /*global overwolf*/
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 
-export class Settings extends Component {
+class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
       res: "resNormal",
-      lang: "en",
       itemsWindow: "enabled",
       rollingWindow: "enabled",
       trackerWindow: "enabled",
@@ -49,9 +49,7 @@ export class Settings extends Component {
         console.log("Language Message Sent:" + lang);
       }
     });
-    this.setState({
-      lang: lang
-    });
+    this.props.i18n.changeLanguage(lang);
   }
 
   fullTracker() {
@@ -192,9 +190,7 @@ export class Settings extends Component {
     }
 
     if ("lang" in windowData.localStorage) {
-      _this.setState({
-        lang: windowData.localStorage.lang
-      });
+      this.props.i18n.changeLanguage(windowData.localStorage.lang);
     }
 
     if ("onlyPin" in windowData.localStorage) {
@@ -213,6 +209,8 @@ export class Settings extends Component {
   }
 
   render() {
+    const { t } = this.props;
+
     return (
       <main className="settings">
         <div className="sidebar">
@@ -226,7 +224,7 @@ export class Settings extends Component {
               settings={"settings"}
               onClick={this.props.setSettingsPage}
             >
-              <h3>{this.props.lang === "en" ? "Settings" : "设置"}</h3>
+              <h3>{t("Settings")}</h3>
               <img
                 src={require("../images/nav/nav-arrow.svg")}
                 alt="Arrow"
@@ -245,7 +243,7 @@ export class Settings extends Component {
               settings={"contact"}
               onClick={this.props.setSettingsPage}
             >
-              <h3>{this.props.lang === "en" ? "Contact" : "联系"}</h3>
+              <h3>{t("Contact")}</h3>
               <img
                 src={require("../images/nav/nav-arrow.svg")}
                 alt="Arrow"
@@ -265,7 +263,7 @@ export class Settings extends Component {
           {this.props.settingsPage === "settings" ? (
             <React.Fragment>
               <div className="settings-group">
-                <h4>{this.state.lang === "en" ? "Windows" : "窗口"}</h4>
+                <h4>{t("Windows")}</h4>
                 <div
                   className={
                     "settings-item" +
@@ -282,7 +280,7 @@ export class Settings extends Component {
                       alt="Check"
                     ></img>
                   </div>
-                  {this.state.lang === "en" ? "Item Cheatsheet" : "装备备忘录"}
+                  {t("Item Cheatsheet")}
                 </div>
                 <div
                   className={
@@ -300,7 +298,7 @@ export class Settings extends Component {
                       alt="Check"
                     ></img>
                   </div>
-                  {this.state.lang === "en" ? "Rolling Chance" : "抽卡几率"}
+                  {t("Rolling Chance")}
                 </div>
                 <div
                   className={
@@ -318,11 +316,11 @@ export class Settings extends Component {
                       alt="Check"
                     ></img>
                   </div>
-                  {this.state.lang === "en" ? "Team Tracker" : "球队"}
+                  {t("Team Tracker")}
                 </div>
               </div>
               <div className="settings-group">
-                <h4>{this.state.lang === "en" ? "Scale" : "缩放"}</h4>
+                <h4>{t("Scale")}</h4>
                 <div
                   className={
                     "settings-item" +
@@ -363,11 +361,11 @@ export class Settings extends Component {
                 </div>
               </div>
               <div className="settings-group">
-                <h4>{this.state.lang === "en" ? "Language" : "语言"}</h4>
+                <h4>{t("Language")}</h4>
                 <div
                   className={
                     "settings-item" +
-                    (this.state.lang === "en" ? " active" : "")
+                    (this.props.i18n.language === "en" ? " active" : "")
                   }
                 >
                   <div
@@ -386,7 +384,7 @@ export class Settings extends Component {
                 <div
                   className={
                     "settings-item" +
-                    (this.state.lang === "ch" ? " active" : "")
+                    (this.props.i18n.language === "ch" ? " active" : "")
                   }
                 >
                   <div
@@ -402,9 +400,28 @@ export class Settings extends Component {
                   </div>
                   Chinese
                 </div>
+                <div
+                  className={
+                    "settings-item" +
+                    (this.props.i18n.language === "vi" ? " active" : "")
+                  }
+                >
+                  <div
+                    className="settings-checkbox"
+                    lang="vi"
+                    onClick={this.changeLang}
+                  >
+                    <img
+                      className="settings-check"
+                      src={require("../images/ui/icon-check.svg")}
+                      alt="Check"
+                    ></img>
+                  </div>
+                  Tiếng Việt
+                </div>
               </div>
               <div className="settings-group">
-                <h4>{this.state.lang === "en" ? "Team Tracker" : "球队"}</h4>
+                <h4>{t("Team Tracker")}</h4>
                 <div
                   className={
                     "settings-item" + (!this.state.onlyPin ? " active" : "")
@@ -421,9 +438,7 @@ export class Settings extends Component {
                       alt="Check"
                     ></img>
                   </div>
-                  {this.state.lang === "en"
-                    ? "Real-time Board + Pinned Team Comp"
-                    : "实时板+决赛团队"}
+                  {t("Real-time Board + Pinned Team Comp")}
                 </div>
                 <div
                   className={
@@ -441,9 +456,7 @@ export class Settings extends Component {
                       alt="Check"
                     ></img>
                   </div>
-                  {this.state.lang === "en"
-                    ? "Only Pinned Team Comp"
-                    : "仅决赛队伍"}
+                  {t("Only Pinned Team Comp")}
                 </div>
               </div>
             </React.Fragment>
@@ -452,14 +465,12 @@ export class Settings extends Component {
           {this.props.settingsPage === "contact" ? (
             <React.Fragment>
               <p>
-                {this.state.lang === "en"
-                  ? "If you would like to request a feature, report a bug, or share feedback, please feel free to send me a message. Business inquiries as well. I try to respond to all of them within the week."
-                  : "如果您想要请求功能、报告错误或共享反馈，请随时向我发送消息。还有商务咨询。我尽量在一周内回复这些。"}
+                {t(
+                  "If you would like to request a feature, report a bug, or share feedback, please feel free to send me a message. Business inquiries as well. I try to respond to all of them within the week."
+                )}
               </p>
               <div className="settings-group">
-                <h4>
-                  {this.state.lang === "en" ? "Contact Info" : "以下是联系方式"}
-                </h4>
+                <h4>{t("Contact Info")}</h4>
                 <ul className="settings-list">
                   <li className="settings-list-item">
                     <span>Email:</span>hello.tftactics@gmail.com
@@ -479,3 +490,4 @@ export class Settings extends Component {
     );
   }
 }
+export default withTranslation()(Settings);

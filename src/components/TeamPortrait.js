@@ -2,12 +2,12 @@
 // Utilities
 import React, { Component } from "react";
 // Components
-import { CharacterPortrait } from "./CharacterPortrait.js";
-import { TypePortrait } from "./TypePortrait.js";
-import { OriginPortrait } from "./OriginPortrait.js";
+import CharacterPortrait from "./CharacterPortrait.js";
+import TypePortrait from "./TypePortrait.js";
+import OriginPortrait from "./OriginPortrait.js";
 import { Hex } from "./Hex.js";
-
-export class TeamPortrait extends Component {
+import { withTranslation } from "react-i18next";
+class TeamPortrait extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,6 +43,7 @@ export class TeamPortrait extends Component {
 
   render() {
     const isActive = this.state.isActive;
+    const { t } = this.props;
     return (
       <div className="team-wrapper">
         <div
@@ -80,7 +81,7 @@ export class TeamPortrait extends Component {
                       {this.props.title}
                     </div>
                   ) : null}
-                  {this.props.lang === "en"
+                  {this.props.lang !== "ch"
                     ? this.props.data.name
                     : this.props.data.name_ch}
                 </div>
@@ -145,9 +146,7 @@ export class TeamPortrait extends Component {
                         }, this)
                       : null}
                   </div>
-                  <div className="team-expanded-title">
-                    {this.props.lang === "en" ? "Early Game" : "前期阵容"}
-                  </div>
+                  <div className="team-expanded-title">{t("Early Game")}</div>
                 </div>
                 <div className="team-expanded-group builder">
                   <div className="builder-bonus">
@@ -209,9 +208,7 @@ export class TeamPortrait extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="team-expanded-title">
-                    {this.props.lang === "en" ? "Traits" : "羁绊"}{" "}
-                  </div>
+                  <div className="team-expanded-title">{t("Traits")} </div>
                 </div>
               </div>
               <div className="team-expanded">
@@ -453,9 +450,7 @@ export class TeamPortrait extends Component {
                       )}
                     </ul>
                   </div>
-                  <div className="team-expanded-title">
-                    {this.props.lang === "en" ? "Positioning" : "站位"}
-                  </div>
+                  <div className="team-expanded-title">{t("Positioning")}</div>
                 </div>
                 <div className="team-expanded-group options">
                   <div className="team-expanded-list">
@@ -521,9 +516,7 @@ export class TeamPortrait extends Component {
                     },
                     this)}
                   </div>
-                  <div className="team-expanded-title">
-                    {this.props.lang === "en" ? "Options" : "可以更换"}
-                  </div>
+                  <div className="team-expanded-title">{t("Options")}</div>
                 </div>
               </div>
             </React.Fragment>
@@ -533,3 +526,4 @@ export class TeamPortrait extends Component {
     );
   }
 }
+export default withTranslation()(TeamPortrait);

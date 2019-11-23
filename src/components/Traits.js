@@ -2,12 +2,12 @@ import React, { Component } from "react";
 // TFT
 // Components
 import { SearchBar } from "../components/SearchBar";
-import { TeamPortrait } from "../components/TeamPortrait";
-import { TypePortrait } from "./TypePortrait.js";
-import { OriginPortrait } from "./OriginPortrait.js";
-import { CharacterPortrait } from "./CharacterPortrait.js";
-
-export class Traits extends Component {
+import TeamPortrait from "../components/TeamPortrait";
+import TypePortrait from "./TypePortrait.js";
+import OriginPortrait from "./OriginPortrait.js";
+import CharacterPortrait from "./CharacterPortrait.js";
+import { withTranslation } from "react-i18next";
+class Traits extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,6 +59,7 @@ export class Traits extends Component {
   }
 
   render() {
+    const { t } = this.props;
     var data = this.props.metaJSON;
     data.sort(function(a, b) {
       if (a.name < b.name) {
@@ -106,7 +107,7 @@ export class Traits extends Component {
               category={"champions"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "Champions" : "英雄详情"}</h3>
+              <h3>{t("Champions")}</h3>
             </div>
             <div
               className={
@@ -116,15 +117,13 @@ export class Traits extends Component {
               category={"traits"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "Traits" : "羁绊"}</h3>
+              <h3>{t("Traits")}</h3>
             </div>
           </div>
           <div className="searchbar-wrapper">
             <SearchBar
               searchValue={this.state.searchValue}
-              placeholderValue={
-                this.props.lang === "en" ? "Search by name..." : "搜索"
-              }
+              placeholderValue={t("Search by name...")}
               updateSearch={this.updateSearch}
               clearSearch={this.clearSearch}
             />
@@ -218,19 +217,19 @@ export class Traits extends Component {
 
         <div className="main main-wrapper">
           <div className="header-wrapper">
-            <h1>{this.props.lang === "en" ? "Top Team" : "最佳阵容排行"}</h1>
+            <h1>{t("Popular Team Comps")}</h1>
             <div className="legend">
               <div className="legend-item">
                 <div className="legend-up">▴</div>
-                {this.props.lang === "en" ? "Tier Up" : "排名上升"}
+                {t("Tier Up")}
               </div>
               <div className="legend-item">
                 <div className="legend-down">▾</div>
-                {this.props.lang === "en" ? "Tier Down" : "排名下降"}
+                {t("Tier Down")}
               </div>
               <div className="legend-item">
                 <div className="legend-new">N</div>
-                {this.props.lang === "en" ? "New" : "新的"}
+                {t("New")}
               </div>
             </div>
           </div>
@@ -404,3 +403,4 @@ export class Traits extends Component {
     );
   }
 }
+export default withTranslation()(Traits);

@@ -2,10 +2,10 @@
 import React, { Component } from "react";
 import Tooltip from "rc-tooltip";
 // Components
-import { TeamPortrait } from "../components/TeamPortrait";
+import TeamPortrait from "../components/TeamPortrait";
 import { CustomTeamPortrait } from "../components/CustomTeamPortrait";
 import { BoardPortrait } from "../components/BoardPortrait";
-
+import { withTranslation } from "react-i18next";
 class Tracker extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +13,6 @@ class Tracker extends Component {
       board: [],
       team: "",
       res: "resNormal",
-      lang: "en",
       final: false,
       onlyPin: false
     };
@@ -69,13 +68,6 @@ class Tracker extends Component {
         team: JSON.parse(windowData.localStorage.teambuilder)
       });
     }
-
-    if ("lang" in windowData.localStorage) {
-      _this.setState({
-        lang: windowData.localStorage.lang
-      });
-    }
-
     if ("onlyPin" in windowData.localStorage) {
       this.setState({
         onlyPin: JSON.parse(windowData.localStorage.onlyPin)
@@ -215,12 +207,6 @@ class Tracker extends Component {
           team: JSON.parse(info.content)
         });
       }
-      if (info.id === "lang") {
-        console.log("Lang Message Received: " + JSON.stringify(info.content));
-        _this.setState({
-          lang: info.content
-        });
-      }
       if (info.id === "res") {
         console.log("Res Message Received: " + JSON.stringify(info.content));
         _this.setState({
@@ -279,6 +265,7 @@ class Tracker extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className={"tracker " + this.state.res}>
         <svg xmlns="http://www.w3.org/2000/svg" display="none">
@@ -324,9 +311,9 @@ class Tracker extends Component {
               mouseLeaveDelay={0.3}
               overlay={
                 <div className="recap-tooltip">
-                  {this.state.lang === "en"
-                    ? "This is your board in real-time. Expand the window to pin a pre-made team or build your own. Configure this window from the Settings tab of the Database."
-                    : "这是您的实时面板。扩展窗口以选择完成的团队或建立自己的团队。从数据库的“设置”选项卡配置此窗口。"}
+                  {t(
+                    "This is your board in real-time. Expand the window to pin a pre-made team or build your own. Configure this window from the Settings tab of the Database."
+                  )}
                 </div>
               }
               align={{ offset: [0, -22] }}
@@ -345,9 +332,9 @@ class Tracker extends Component {
               mouseLeaveDelay={0.3}
               overlay={
                 <div className="recap-tooltip">
-                  {this.state.lang === "en"
-                    ? "Game Events are temporarily down. Your board will not update automatically."
-                    : "此功能暂时被暂停。您的团队不会自动更新。"}
+                  {t(
+                    "Game Events are temporarily down. Your board will not update automatically."
+                  )}
                 </div>
               }
               align={{ offset: [0, -22] }}
@@ -366,8 +353,8 @@ class Tracker extends Component {
               itemsJSON={this.props.itemsJSON}
               charactersJSON={this.props.charactersJSON}
               patchJSON={this.props.patchJSON}
-              lang={this.state.lang}
               set={this.props.set}
+              lang={this.props.i18n.language}
             ></BoardPortrait>
             <div className="tracker-team-placeholder">
               <div className="blank"></div>
@@ -416,9 +403,9 @@ class Tracker extends Component {
               mouseLeaveDelay={0.3}
               overlay={
                 <div className="recap-tooltip">
-                  {this.state.lang === "en"
-                    ? "Pin a pre-made team or build your own. Configure this window from the Settings tab of the Database."
-                    : "选择完成的团队或建立自己的团队。从数据库的“设置”选项卡配置此窗口。"}
+                  {t(
+                    "Pin a pre-made team or build your own. Configure this window from the Settings tab of the Database."
+                  )}
                 </div>
               }
               align={{ offset: [0, -22] }}
@@ -451,8 +438,8 @@ class Tracker extends Component {
                             itemsJSON={this.props.itemsJSON}
                             charactersJSON={this.props.charactersJSON}
                             patchJSON={this.props.patchJSON}
-                            lang={this.state.lang}
                             set={this.props.set}
+                            lang={this.props.i18n.language}
                           ></TeamPortrait>
                         </React.Fragment>
                       ) : null;
@@ -467,8 +454,8 @@ class Tracker extends Component {
                   typesJSON={this.props.typesJSON}
                   charactersJSON={this.props.charactersJSON}
                   patchJSON={this.props.patchJSON}
-                  lang={this.state.lang}
                   set={this.props.set}
+                  lang={this.props.i18n.language}
                 ></CustomTeamPortrait>
               )
             ) : null}
@@ -487,7 +474,9 @@ class Tracker extends Component {
           <div className="tracker-final-buttons">
             <Tooltip
               placement="bottom"
-              overlay={<div className="tracker-btn-overlay">Change Team</div>}
+              overlay={
+                <div className="tracker-btn-overlay">{t("Change Team")}</div>
+              }
               align={{ offset: [0, 8] }}
               key={origin.name}
             >
@@ -498,13 +487,15 @@ class Tracker extends Component {
               >
                 <img
                   src={require("../images/ui/icon-change.svg")}
-                  alt="Change Team"
+                  alt={t("Change Team")}
                 ></img>
               </div>
             </Tooltip>
             <Tooltip
               placement="bottom"
-              overlay={<div className="tracker-btn-overlay">Build Team</div>}
+              overlay={
+                <div className="tracker-btn-overlay">{t("Build Team")}</div>
+              }
               align={{ offset: [0, 8] }}
               key={origin.name}
             >
@@ -515,7 +506,7 @@ class Tracker extends Component {
               >
                 <img
                   src={require("../images/ui/icon-build.svg")}
-                  alt="Change Team"
+                  alt={t("Change Team")}
                 ></img>
               </div>
             </Tooltip>
@@ -526,4 +517,4 @@ class Tracker extends Component {
   }
 }
 
-export default Tracker;
+export default withTranslation()(Tracker);

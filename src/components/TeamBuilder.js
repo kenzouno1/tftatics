@@ -4,11 +4,11 @@ import React, { Component } from "react";
 import "react-table/react-table.css";
 // Components
 import { SearchBar } from "./SearchBar";
-import { CharacterPortrait } from "../components/CharacterPortrait";
-import { TypePortrait } from "../components/TypePortrait";
-import { OriginPortrait } from "../components/OriginPortrait";
-
-export class TeamBuilder extends Component {
+import CharacterPortrait from "../components/CharacterPortrait";
+import TypePortrait  from "../components/TypePortrait";
+import OriginPortrait from "../components/OriginPortrait";
+import { withTranslation } from "react-i18next";
+class TeamBuilder extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -474,6 +474,7 @@ export class TeamBuilder extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <main className="builder">
         <div className="sidebar">
@@ -486,7 +487,7 @@ export class TeamBuilder extends Component {
               category={"all"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "All" : "所有英雄"}</h3>
+              <h3>{t("All")}</h3>
             </div>
             <div
               className={
@@ -562,11 +563,7 @@ export class TeamBuilder extends Component {
           <div className="searchbar-wrapper">
             <SearchBar
               searchValue={this.state.searchValue}
-              placeholderValue={
-                this.props.lang === "en"
-                  ? "Search by name, origin, or class..."
-                  : "搜索"
-              }
+              placeholderValue={t("Search by name, origin, or class...")}
               updateSearch={this.updateSearch}
               clearSearch={this.clearSearch}
             />
@@ -625,8 +622,7 @@ export class TeamBuilder extends Component {
         <div className="main main-wrapper">
           <div className="header-wrapper">
             <h1>
-              {this.props.lang === "en" ? "Team Builder" : "阵容模拟"} - (
-              {this.state.teamArr.length} / 9)
+              {t("Team Builder")} - ({this.state.teamArr.length} / 9)
             </h1>
             <div className="btns">
               <img
@@ -639,7 +635,7 @@ export class TeamBuilder extends Component {
                 onClick={this.sendCustomTeam}
               ></img>
               <div className="btn" onClick={this.clearTeam}>
-                {this.props.lang === "en" ? "Clear Team" : "清除阵容"}
+                {t("Clear Team")}
               </div>
             </div>
           </div>
@@ -707,7 +703,7 @@ export class TeamBuilder extends Component {
                           </div>
                         </div>
                         <p className="character-name">
-                          {this.props.lang === "en"
+                          {this.props.lang !== "ch"
                             ? character.name
                             : character.name_ch}
                         </p>
@@ -719,16 +715,12 @@ export class TeamBuilder extends Component {
                 this);
               }, this)
             ) : (
-              <div className="builder-cta">
-                {this.props.lang === "en"
-                  ? "Your team is empty!"
-                  : "你的阵容是空的"}
-              </div>
+              <div className="builder-cta">{t("Your team is empty!")}</div>
             )}
           </div>
           <div className="builder-bonus">
             <div className="builder-bonus-group">
-              <h3>{this.props.lang === "en" ? "Origins" : "种族"}</h3>
+              <h3>{t("Origins")}</h3>
               <div className="builder-bonus-list">
                 {Object.keys(this.props.originsJSON).map(function(key) {
                   var origin = this.props.originsJSON[key];
@@ -752,7 +744,7 @@ export class TeamBuilder extends Component {
               </div>
             </div>
             <div className="builder-bonus-group">
-              <h3>{this.props.lang === "en" ? "Classes" : "职业"}</h3>
+              <h3>{t("Classes")}</h3>
               <div className="builder-bonus-list">
                 {Object.keys(this.props.typesJSON).map(function(key) {
                   var type = this.props.typesJSON[key];
@@ -781,3 +773,4 @@ export class TeamBuilder extends Component {
     );
   }
 }
+export default withTranslation()(TeamBuilder);

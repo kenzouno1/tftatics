@@ -1,9 +1,11 @@
 // Utilities
 import React, { Component } from "react";
 import Tooltip from "rc-tooltip";
+import { withTranslation } from "react-i18next";
 
-export class TypePortrait extends Component {
+class TypePortrait extends Component {
   render() {
+    const { t } = this.props;
     return (
       <Tooltip
         placement="top"
@@ -23,14 +25,14 @@ export class TypePortrait extends Component {
                 }
                 alt={this.props.type.name}
               ></img>
-              {this.props.lang === "en"
+              {this.props.lang !== "ch"
                 ? this.props.type.name
                 : this.props.type.name_ch}
             </div>
             <div className="overlay-bonus-list">
               {this.props.type.effect ? (
                 <div className="overlay-bonus-heading">
-                  {this.props.lang === "en"
+                  {this.props.lang !== "ch"
                     ? this.props.type.effect
                     : this.props.type.effect_ch}
                 </div>
@@ -94,7 +96,7 @@ export class TypePortrait extends Component {
                   }, this)}
             </div>
             <div className="overlay-recipe">
-              {this.props.lang === "en" ? "Champions:" : "英雄详情"}
+              {t("Champions:")}
               {Object.keys(this.props.charactersJSON).map(function(key) {
                 var character = this.props.charactersJSON[key];
                 if (character.active) {
@@ -249,7 +251,7 @@ export class TypePortrait extends Component {
                 alt={this.props.type.name}
               ></img>
               {this.props.tier
-                ? this.props.lang === "en"
+                ? this.props.lang !== "ch"
                   ? this.props.type.name
                   : this.props.type.name_ch
                 : null}
@@ -260,3 +262,4 @@ export class TypePortrait extends Component {
     );
   }
 }
+export default withTranslation()(TypePortrait);

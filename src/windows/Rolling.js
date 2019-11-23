@@ -1,8 +1,8 @@
 /*global overwolf*/
 import React, { Component } from "react";
 // Components
-import { CharacterPortrait } from "../components/CharacterPortrait";
-
+import CharacterPortrait from "../components/CharacterPortrait";
+import { withTranslation } from "react-i18next";
 class Rolling extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +14,6 @@ class Rolling extends Component {
       showNext: false,
       showChamps: false,
       res: "resNormal",
-      lang: "en",
       timer: null,
       levelTimer: null
     };
@@ -36,12 +35,6 @@ class Rolling extends Component {
         gepStatus: windowData.localStorage.gepStatus
       });
       console.log("gepStatus localStorage found!");
-    }
-
-    if ("lang" in windowData.localStorage) {
-      _this.setState({
-        lang: windowData.localStorage.lang
-      });
     }
 
     if ("res" in windowData.localStorage) {
@@ -90,12 +83,6 @@ class Rolling extends Component {
         console.log("chance message received: " + info.content.info.me.xp);
         _this.setState({
           data: JSON.parse(info.content.info.me.xp)
-        });
-      }
-      if (info.id === "lang") {
-        console.log("Lang Message Received: " + JSON.stringify(info.content));
-        _this.setState({
-          lang: info.content
         });
       }
       if (info.id === "res") {
@@ -187,6 +174,7 @@ class Rolling extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <React.Fragment>
         <div
@@ -207,7 +195,7 @@ class Rolling extends Component {
                         character={character}
                         key={key}
                         patchJSON={this.props.patchJSON}
-                        lang={this.state.lang}
+                        lang={this.props.i18n.language}
                         set={this.props.set}
                       ></CharacterPortrait>
                     );
@@ -220,7 +208,7 @@ class Rolling extends Component {
                         character={character}
                         key={key}
                         patchJSON={this.props.patchJSON}
-                        lang={this.state.lang}
+                        lang={this.props.i18n.language}
                         set={this.props.set}
                       ></CharacterPortrait>
                     );
@@ -258,11 +246,7 @@ class Rolling extends Component {
                   : "10"
                 : null}
             </h2>
-            <h4>
-              {this.state.lang === "en"
-                ? "Tier " + this.state.cost + " Champions in pool"
-                : "CHANGE_ME"}
-            </h4>
+            <h4>{t("Tier {{cost}} Champions in pool", this.state.cost)}</h4>
           </div>
         </div>
         <div
@@ -416,4 +400,4 @@ class Rolling extends Component {
   }
 }
 
-export default Rolling;
+export default withTranslation()(Rolling);

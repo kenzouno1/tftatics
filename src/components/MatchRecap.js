@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Line, HorizontalBar } from "react-chartjs-2";
 // Components
-import { CharacterPortrait } from "../components/CharacterPortrait";
-
-export class MatchRecap extends Component {
+import CharacterPortrait from "../components/CharacterPortrait";
+import { withTranslation } from "react-i18next";
+class MatchRecap extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +27,7 @@ export class MatchRecap extends Component {
   }
 
   render() {
+    const { t } = this.props;
     function ordinal_suffix_of(i) {
       var j = i % 10,
         k = i % 100;
@@ -66,7 +67,7 @@ export class MatchRecap extends Component {
           {
             scaleLabel: {
               display: true,
-              labelString: this.props.lang === "en" ? "Rounds" : "回合",
+              labelString: t("Rounds"),
               fontColor: "rgba(255,255,255,0.57)"
             },
             ticks: {
@@ -329,7 +330,7 @@ export class MatchRecap extends Component {
       labels: [],
       datasets: [
         {
-          label: this.props.lang === "en" ? "Overall Damage" : "总输出",
+          label: t("Overall Damage"),
           data: [],
           backgroundColor: "#d47559"
         }
@@ -391,16 +392,12 @@ export class MatchRecap extends Component {
                   <div className="placement-value">
                     {ordinal_suffix_of(placement)}
                   </div>
-                  <div className="placement-title">
-                    {this.props.lang === "en" ? "Place" : "比赛排名"}
-                  </div>
+                  <div className="placement-title">{t("Place")}</div>
                 </div>
               </div>
               <div className="sidebar-stats">
                 <div className="sidebar-stat">
-                  <div className="stat-title">
-                    {this.props.lang === "en" ? "Wins" : "获胜"}
-                  </div>
+                  <div className="stat-title">{t("Wins")}</div>
                   <div className="stat-bar">
                     <span
                       className="bar-fill"
@@ -415,9 +412,7 @@ export class MatchRecap extends Component {
                   <div className="stat-value">{roundsWon}</div>
                 </div>
                 <div className="sidebar-stat">
-                  <div className="stat-title">
-                    {this.props.lang === "en" ? "Losses" : "失败"}
-                  </div>
+                  <div className="stat-title">{t("Losses")}</div>
                   <div className="stat-bar">
                     <span
                       className="bar-fill"
@@ -432,9 +427,7 @@ export class MatchRecap extends Component {
                   <div className="stat-value">{roundsLost}</div>
                 </div>
                 <div className="sidebar-stat">
-                  <div className="stat-title">
-                    {this.props.lang === "en" ? "Top Win Streak" : "最多连胜"}
-                  </div>
+                  <div className="stat-title">{t("Top Win Streak")}</div>
                   <div className="stat-bar">
                     <span
                       className="bar-fill"
@@ -449,9 +442,7 @@ export class MatchRecap extends Component {
                   <div className="stat-value">{winStreak}</div>
                 </div>
                 <div className="sidebar-stat">
-                  <div className="stat-title">
-                    {this.props.lang === "en" ? "Top Lose Streak" : "最多连败"}
-                  </div>
+                  <div className="stat-title">{t("Top Lose Streak")}</div>
                   <div className="stat-bar">
                     <span
                       className="bar-fill"
@@ -466,9 +457,7 @@ export class MatchRecap extends Component {
                   <div className="stat-value">{loseStreak}</div>
                 </div>
                 <div className="sidebar-stat">
-                  <div className="stat-title">
-                    {this.props.lang === "en" ? "Most Gold" : "最多金币"}
-                  </div>
+                  <div className="stat-title">{t("Most Gold")}</div>
                   <div className="stat-bar">
                     <span
                       className="bar-fill"
@@ -485,7 +474,7 @@ export class MatchRecap extends Component {
           <div className="header-wrapper">
             {this.props.apiStatus && this.props.gepStatus !== "3" ? (
               <React.Fragment>
-                <h1>{this.props.lang === "en" ? "Match Recap" : "比赛概况"}</h1>
+                <h1>{t("Match Recap")}</h1>
                 {this.props.lastMatch && this.props.showTeam ? (
                   <div className="recap-team">
                     {Object.keys(
@@ -529,21 +518,13 @@ export class MatchRecap extends Component {
                 ) : null}
               </React.Fragment>
             ) : (
-              <h1>
-                {this.props.lang === "en"
-                  ? "Match Recap is currently unavailable."
-                  : "比赛概况暂时无法获取"}
-              </h1>
+              <h1>{t("Match Recap is currently unavailable.")}</h1>
             )}
           </div>
           {this.props.apiStatus && this.props.gepStatus !== "3" ? (
             this.props.matchData === null ? (
               <div className="data-warning">
-                <p>
-                  {this.props.lang === "en"
-                    ? "No match found!"
-                    : "未找到匹配项！"}
-                </p>
+                <p>{t("No match found!")}</p>
               </div>
             ) : (
               <React.Fragment>
@@ -556,7 +537,7 @@ export class MatchRecap extends Component {
                     topic={"Champions"}
                     onClick={this.setTopic}
                   >
-                    {this.props.lang === "en" ? "Champions" : "英雄详情"}
+                    {t("Champions")}
                   </div>
                   {this.props.showTeam ? (
                     <div
@@ -569,7 +550,7 @@ export class MatchRecap extends Component {
                       topic={"Summoners"}
                       onClick={this.setTopic}
                     >
-                      {this.props.lang === "en" ? "Summoners" : "召唤师"}
+                      {t("Summoners")}
                     </div>
                   ) : null}
                 </div>
@@ -601,7 +582,7 @@ export class MatchRecap extends Component {
                         category={"Level"}
                         onClick={this.setCategory}
                       >
-                        {this.props.lang === "en" ? "Level" : "等级"}
+                        {t("Level")}
                       </div>
                       <div
                         className={
@@ -613,7 +594,7 @@ export class MatchRecap extends Component {
                         category={"Health"}
                         onClick={this.setCategory}
                       >
-                        {this.props.lang === "en" ? "Health" : "血量"}
+                        {t("Health")}
                       </div>
                       <div
                         className={
@@ -625,7 +606,7 @@ export class MatchRecap extends Component {
                         category={"Wins"}
                         onClick={this.setCategory}
                       >
-                        {this.props.lang === "en" ? "Wins" : "获胜"}
+                        {t("Wins")}
                       </div>
                       <div
                         className={
@@ -637,7 +618,7 @@ export class MatchRecap extends Component {
                         category={"Gold"}
                         onClick={this.setCategory}
                       >
-                        {this.props.lang === "en" ? "Gold" : "金币"}
+                        {t("Gold")}
                       </div>
                     </div>
                   </div>
@@ -656,9 +637,9 @@ export class MatchRecap extends Component {
             )
           ) : (
             <p>
-              {this.props.lang === "en"
-                ? "The service might be down for maintenance or having technical difficulties. We are trying to resolve it as quickly as possible."
-                : "服务可能会因为维护或技术问题而中断。我们正在努力并且会尽快解决这个问题。"}
+              {t(
+                "The service might be down for maintenance or having technical difficulties. We are trying to resolve it as quickly as possible."
+              )}
             </p>
           )}
         </div>
@@ -666,3 +647,4 @@ export class MatchRecap extends Component {
     );
   }
 }
+export default withTranslation()(MatchRecap);

@@ -5,8 +5,9 @@ import { ChampionTierList } from "./ChampionTierList.js";
 import { OriginTierList } from "./OriginTierList.js";
 import { TypeTierList } from "./TypeTierList.js";
 import { ItemTierList } from "./ItemTierList.js";
+import { withTranslation } from "react-i18next";
 
-export class TierLists extends Component {
+class TierLists extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +21,7 @@ export class TierLists extends Component {
     });
   }
   render() {
+    const { t } = this.props;
     return (
       <main
         className={
@@ -39,7 +41,7 @@ export class TierLists extends Component {
               category={"Champions"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "Champions" : "英雄详情"}</h3>
+              <h3>{t("Champions")}</h3>
               <img
                 src={require("../images/nav/nav-arrow.svg")}
                 alt="Arrow"
@@ -53,7 +55,7 @@ export class TierLists extends Component {
               category={"Origins"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "Origins" : "种族"}</h3>
+              <h3>{t("Origins")}</h3>
               <img
                 src={require("../images/nav/nav-arrow.svg")}
                 alt="Arrow"
@@ -67,7 +69,7 @@ export class TierLists extends Component {
               category={"Classes"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "Classes" : "职业"}</h3>
+              <h3>{t("Classes")}</h3>
               <img
                 src={require("../images/nav/nav-arrow.svg")}
                 alt="Arrow"
@@ -81,7 +83,7 @@ export class TierLists extends Component {
               category={"Items"}
               onClick={this.setCategory}
             >
-              <h3>{this.props.lang === "en" ? "Items" : "装备"}</h3>
+              <h3>{t("Items")}</h3>
               <img
                 src={require("../images/nav/nav-arrow.svg")}
                 alt="Arrow"
@@ -89,32 +91,27 @@ export class TierLists extends Component {
             </div>
           </div>
           <div className="disclaimer">
-            <p>
-              {this.props.lang === "en"
-                ? "The order within the tiers does not matter."
-                : "同一等级排名不分先后"}
-            </p>
+            <p>{t("The order within the tiers does not matter.")}</p>
           </div>
         </div>
 
         <div className="main main-wrapper">
           <div className="header-wrapper">
             <h1>
-              {this.props.lang === "en" ? "Tier List" : "排名列表"} -{" "}
-              {this.state.tier}
+              {t("Tier List")} - {this.state.tier}
             </h1>
             <div className="legend">
               <div className="legend-item">
                 <div className="legend-up">▴</div>
-                {this.props.lang === "en" ? "Tier Up" : "排名上升"}
+                {t("Tier Up")}
               </div>
               <div className="legend-item">
                 <div className="legend-down">▾</div>
-                {this.props.lang === "en" ? "Tier Down" : "排名下降"}
+                {t("Tier Down")}
               </div>
               <div className="legend-item">
                 <div className="legend-new">N</div>
-                {this.props.lang === "en" ? "New" : "新的"}
+                {t("New")}
               </div>
             </div>
           </div>
@@ -353,3 +350,4 @@ export class TierLists extends Component {
     );
   }
 }
+export default withTranslation()(TierLists);

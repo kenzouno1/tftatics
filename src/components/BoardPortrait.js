@@ -1,7 +1,7 @@
 // Utilities
 import React, { Component } from "react";
 // Components
-import { CharacterPortrait } from "./CharacterPortrait.js";
+import CharacterPortrait from "./CharacterPortrait.js";
 
 export class BoardPortrait extends Component {
   render() {

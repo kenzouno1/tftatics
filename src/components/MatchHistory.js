@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import Tooltip from "rc-tooltip";
 // TFT
 // Components
-import { CharacterPortrait } from "../components/CharacterPortrait";
-import { OriginPortrait } from "../components/OriginPortrait";
-import { TypePortrait } from "../components/TypePortrait";
-
-export class MatchHistory extends Component {
+import CharacterPortrait from "../components/CharacterPortrait";
+import OriginPortrait from "../components/OriginPortrait";
+import TypePortrait  from "../components/TypePortrait";
+import { withTranslation } from "react-i18next";
+class MatchHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,6 +34,7 @@ export class MatchHistory extends Component {
   }
 
   render() {
+    const { t } = this.props;
     var options = { year: "2-digit", month: "short", day: "numeric" };
 
     function isEmpty(obj) {
@@ -165,22 +166,16 @@ export class MatchHistory extends Component {
                     <div className="placement-value">
                       {Math.round((avgRank / totalGames) * 10) / 10}
                     </div>
-                    <div className="placement-title">
-                      {this.props.lang === "en" ? "Avg Place" : "平均排名"}
-                    </div>
+                    <div className="placement-title">{t("Avg Place")}</div>
                   </div>
                 </div>
                 <div className="sidebar-stats">
                   <div className="sidebar-stat">
-                    <div className="stat-title">
-                      {this.props.lang === "en" ? "Games Played" : "玩过的游戏"}
-                    </div>
+                    <div className="stat-title">{t("Games Played")}</div>
                     <div className="stat-value">{totalGames}</div>
                   </div>
                   <div className="sidebar-stat">
-                    <div className="stat-title">
-                      {this.props.lang === "en" ? "Wins" : "获胜"}
-                    </div>
+                    <div className="stat-title">{t("Wins")}</div>
                     <div className="stat-bar">
                       <span
                         className="bar-fill"
@@ -198,9 +193,7 @@ export class MatchHistory extends Component {
                     </div>
                   </div>
                   <div className="sidebar-stat">
-                    <div className="stat-title">
-                      {this.props.lang === "en" ? "Top 4s" : "前四名"}
-                    </div>
+                    <div className="stat-title">{t("Top 4s")}</div>
                     <div className="stat-bar">
                       <span
                         className="bar-fill"
@@ -218,9 +211,7 @@ export class MatchHistory extends Component {
                     </div>
                   </div>
                   <div className="sidebar-stat alt">
-                    <div className="stat-title">
-                      {this.props.lang === "en" ? "Top Champions" : "第一名"}
-                    </div>
+                    <div className="stat-title">{t("Top Champions")}</div>
                     <div className="stat-value">
                       {Object.keys(mostChampion).map(function(key) {
                         var teamCharacter = mostChampion[key];
@@ -233,9 +224,7 @@ export class MatchHistory extends Component {
                     </div>
                   </div>
                   <div className="sidebar-stat alt">
-                    <div className="stat-title">
-                      {this.props.lang === "en" ? "Top Traits" : "羁绊"}
-                    </div>
+                    <div className="stat-title">{t("Top Traits")}</div>
                     <div className="stat-value">
                       {Object.keys(mostTrait).map(function(key) {
                         var traitName = mostTrait[key];
@@ -257,9 +246,7 @@ export class MatchHistory extends Component {
           <div className="header-wrapper">
             {this.props.apiStatus ? (
               <React.Fragment>
-                <h1>
-                  {this.props.lang === "en" ? "Match History" : "历史战绩"}
-                </h1>
+                <h1>{t("Match History")}</h1>
                 {/* <div className="header-wrapper-group">
                                     <h4>{ this.props.lang === 'en' ? 'Last 10 Matches' : '最近10场比赛' }</h4>
                                     <Tooltip placement="top" mouseEnterDelay={0.3} mouseLeaveDelay={0.3} 
@@ -277,24 +264,20 @@ export class MatchHistory extends Component {
                     className={"btn" + (this.props.allowGet ? "" : " disabled")}
                     onClick={this.props.refreshHistory}
                   >
-                    {this.props.lang === "en" ? "Refresh Data" : "刷新数据"}
+                    {t("Refresh Data")}
                   </div>
                 </div>
               </React.Fragment>
             ) : (
-              <h1>
-                {this.props.lang === "en"
-                  ? "Match History is currently unavailable."
-                  : "历史战绩暂时无法获取"}
-              </h1>
+              <h1>{t("Match History is currently unavailable.")}</h1>
             )}
           </div>
           {this.props.apiStatus ? (
             totalGames === 0 ? (
               <div className="data-warning">
-                {this.props.lang === "en"
-                  ? "Looks like you haven't played a match using TFtactics yet!"
-                  : "看来你还没有使用TFtactics完成过比赛！"}
+                {t(
+                  "Looks like you haven't played a match using TFtactics yet!"
+                )}
               </div>
             ) : (
               <React.Fragment>
@@ -307,14 +290,12 @@ export class MatchHistory extends Component {
                     topic={"Matches"}
                     onClick={this.setTopic}
                   >
-                    {this.props.lang === "en" ? "Matches" : "玩过的游戏"}
+                    {t("Matches")}
                   </div>
                   <Tooltip
                     placement="top"
                     overlay={
-                      <div className="recap-tooltip">
-                        {this.props.lang === "en" ? "Coming soon..." : "快来了"}
-                      </div>
+                      <div className="recap-tooltip">{t("Coming soon...")}</div>
                     }
                     align={{ offset: [0, 0] }}
                   >
@@ -325,15 +306,13 @@ export class MatchHistory extends Component {
                       }
                       topic={"Stats"}
                     >
-                      {this.props.lang === "en" ? "Stats" : "统计"}
+                      {t("Stats")}
                     </div>
                   </Tooltip>
                 </div>
                 <div className="history-summary">
                   <div className="summary-placements">
-                    <div className="summary-title">
-                      {this.props.lang === "en" ? "Placements" : "排名展示"}
-                    </div>
+                    <div className="summary-title">{t("Placements")}</div>
                     <div className="summary-content">
                       {Object.keys(tenMatches).map(function(key) {
                         var comp = tenMatches[key];
@@ -518,9 +497,9 @@ export class MatchHistory extends Component {
             )
           ) : (
             <p>
-              {this.props.lang === "en"
-                ? "The service might be down for maintenance or having technical difficulties. We are trying to resolve it as quickly as possible."
-                : "服务可能会因为维护或技术问题而中断。我们正在努力并且会尽快解决这个问题。"}
+              {t(
+                "The service might be down for maintenance or having technical difficulties. We are trying to resolve it as quickly as possible."
+              )}
             </p>
           )}
         </div>
@@ -528,3 +507,4 @@ export class MatchHistory extends Component {
     );
   }
 }
+export default withTranslation()(MatchHistory);

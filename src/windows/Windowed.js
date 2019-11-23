@@ -1,8 +1,8 @@
 /*global overwolf*/
 import React, { Component } from "react";
 // Components
-import { ItemPortrait } from "../components/ItemPortrait";
-
+import ItemPortrait from "../components/ItemPortrait";
+import { withTranslation } from "react-i18next";
 class Windowed extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +14,6 @@ class Windowed extends Component {
       scale: false,
       locked: false,
       res: "resNormal",
-      lang: "en",
       levelTimer: null
     };
     this.hideWindow = this.hideWindow.bind(this);
@@ -40,12 +39,6 @@ class Windowed extends Component {
     var _this = this;
     var windowData = overwolf.windows.getMainWindow();
 
-    if ("lang" in windowData.localStorage) {
-      _this.setState({
-        lang: windowData.localStorage.lang
-      });
-    }
-
     if ("res" in windowData.localStorage) {
       _this.setState({
         res: windowData.localStorage.res
@@ -70,12 +63,6 @@ class Windowed extends Component {
         console.log("Res Message Received: " + JSON.stringify(info.content));
         _this.setState({
           res: info.content
-        });
-      }
-      if (info.id === "lang") {
-        console.log("Lang Message Received: " + JSON.stringify(info.content));
-        _this.setState({
-          lang: info.content
         });
       }
     });
@@ -199,6 +186,7 @@ class Windowed extends Component {
         ? itemsBase.push(item)
         : null;
     }, this);
+    const { t } = this.props;
     return (
       <div
         className={"windowed " + this.state.res}
@@ -252,7 +240,7 @@ class Windowed extends Component {
               bottom: "0px",
               cursor: "nw-resize"
             }}
-            name="B.F. Sword"
+            name={t("B.F. Sword")}
           ></img>
         ) : null}
         {this.state.item !== "" ? (
@@ -308,7 +296,7 @@ class Windowed extends Component {
                             patchJSON={this.props.patchJSON}
                             pos={"right"}
                             window={"windowed-overlay"}
-                            lang={this.state.lang}
+                            lang={this.props.i18n.language}
                           ></ItemPortrait>
                         </div>
                       ) : null
@@ -374,7 +362,7 @@ class Windowed extends Component {
               page="ingame"
               onClick={this.props.changeWindow}
             >
-              Open Database <b>({this.state.toggle})</b>
+              {t("Open Database")} <b>({this.state.toggle})</b>
             </div>
           </div>
         </main>
@@ -383,4 +371,4 @@ class Windowed extends Component {
   }
 }
 
-export default Windowed;
+export default withTranslation()(Windowed);

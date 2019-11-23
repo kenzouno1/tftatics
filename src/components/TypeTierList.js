@@ -1,7 +1,7 @@
 // Utilities
 import React, { Component } from "react";
 // Components
-import { TypePortrait } from "./TypePortrait.js";
+import TypePortrait  from "./TypePortrait.js";
 
 export class TypeTierList extends Component {
   render() {

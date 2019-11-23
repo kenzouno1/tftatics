@@ -3,8 +3,9 @@ import ReactMarkdown from "react-markdown";
 // TFT
 // Components
 import { Divider } from "../components/Divider";
+import { withTranslation } from "react-i18next";
 
-export class Patch extends Component {
+class Patch extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +36,7 @@ export class Patch extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <main className="patch">
         <div className="sidebar">
@@ -69,12 +71,8 @@ export class Patch extends Component {
           {this.props.patchFull.length > 1 ? (
             <div className="btn expand" onClick={this.showPosts}>
               {this.state.totalPosts === this.props.patchFull.length
-                ? this.props.lang === "en"
-                  ? "Show Less"
-                  : "显示较少"
-                : this.props.lang === "en"
-                ? "Show All"
-                : "显示所有"}
+                ? t("Show Less")
+                : t("Show All")}
             </div>
           ) : null}
         </div>
@@ -86,9 +84,7 @@ export class Patch extends Component {
               return (
                 <div className="post">
                   <div className="page-header">
-                    <h1>
-                      {this.props.lang === "en" ? "Patch Notes" : "更新内容"}
-                    </h1>
+                    <h1>{t("Patch Notes")}</h1>
                     <h4>{post.fields.title}</h4>
                   </div>
                   <Divider></Divider>
@@ -108,3 +104,4 @@ export class Patch extends Component {
     );
   }
 }
+export default withTranslation()(Patch);

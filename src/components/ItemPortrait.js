@@ -1,9 +1,10 @@
 // Utilities
 import React, { Component } from "react";
 import Tooltip from "rc-tooltip";
-
-export class ItemPortrait extends Component {
+import { withTranslation } from "react-i18next";
+class ItemPortrait extends Component {
   render() {
+    const { t } = this.props;
     return (
       <Tooltip
         placement={this.props.pos ? this.props.pos : "top"}
@@ -31,7 +32,7 @@ export class ItemPortrait extends Component {
                 alt={this.props.item.name}
               ></img>
               <div className="overlay-bonus-title">
-                {this.props.lang === "en"
+                {this.props.lang !== "ch"
                   ? this.props.item.name
                   : this.props.item.name_ch}
                 <div className="item-stats-wrapper">
@@ -56,7 +57,7 @@ export class ItemPortrait extends Component {
               </div>
             </div>
             <div className="overlay-bonus-list">
-              {this.props.lang === "en"
+              {this.props.lang !== "ch"
                 ? Object.keys(this.props.item.bonus).map(function(key) {
                     var bonus = this.props.item.bonus[key];
                     return (
@@ -77,7 +78,7 @@ export class ItemPortrait extends Component {
             {this.props.item.name !== "Neeko's Help" ? (
               this.props.item.combine ? (
                 <div className="overlay-recipe">
-                  {this.props.lang === "en" ? "Recipe:" : "合成路径"}
+                  {t("Recipe:")}
                   {Object.keys(this.props.item.combine).map(function(key) {
                     var itemC = this.props.item.combine[key];
                     return (
@@ -99,7 +100,7 @@ export class ItemPortrait extends Component {
                 </div>
               ) : (
                 <div className="overlay-recipe">
-                  {this.props.lang === "en" ? "Into:" : "成"}
+                  {t("Into:")}
                   {Object.keys(this.props.item.into).map(function(key) {
                     var itemC = this.props.item.into[key];
                     return (
@@ -216,3 +217,4 @@ export class ItemPortrait extends Component {
     );
   }
 }
+export default withTranslation()(ItemPortrait);
